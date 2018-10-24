@@ -4,6 +4,7 @@
 ***An easy way to present customizable bottom-half alert.***
 ![SnackView logo](http://www.lucacasula.it/SVItems/SnackViewPreview.jpg)
 
+[![Swift 4.2](https://img.shields.io/badge/swift-4.2-red.svg?style=flat)](https://developer.apple.com/swift)
 ![CocoaPods Compatible](https://img.shields.io/cocoapods/v/SnackView.svg)
 ![Platform](https://img.shields.io/cocoapods/p/SnackView.svg?style=flat)
 ![License](https://img.shields.io/cocoapods/l/SnackView.svg?style=flat)
