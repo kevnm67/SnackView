@@ -58,24 +58,39 @@ open class SVItem: UIView {
     }
     
     //MARK: - Public Method
+    
+    
     /**
      Use this method to add or remove the automatic height constraint. SVItem has a minimum height value equal or greater than 50 pixels.
      - parameter active: Bool value
      */
     public func setMinimumHeightActive(active: Bool) {
         if active {
-            if self.heightConstraint == nil {
-                self.heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50)
-                if let tmpConstraint = self.heightConstraint {
-                    self.addConstraint(tmpConstraint)
-                }
-            }
+            addHeightConstraint()
+        } else {
+            removeHeightConstraint()
         }
-        else {
-            if let tmpConstraint = self.heightConstraint {
-                self.removeConstraint(tmpConstraint)
-                self.heightConstraint = nil
-            }
+    }
+}
+
+extension SVItem {
+    
+    // MARK: Private
+    
+    fileprivate func removeHeightConstraint() {
+        guard let tmpConstraint = self.heightConstraint else { return }
+
+        self.removeConstraint(tmpConstraint)
+        self.heightConstraint = nil
+    }
+    
+    fileprivate func addHeightConstraint() {
+        if self.heightConstraint != nil { return }
+        
+        self.heightConstraint = NSLayoutConstraint(item: self, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 50)
+        
+        if let tmpConstraint = self.heightConstraint {
+            self.addConstraint(tmpConstraint)
         }
     }
 }

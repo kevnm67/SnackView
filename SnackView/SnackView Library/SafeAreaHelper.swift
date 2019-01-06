@@ -45,17 +45,8 @@ class SafeAreaHelper {
     
     /** Return the botton safe area height according device and orientation */
     func getBottomSafeAreaHeight() -> CGFloat {
-        var bottomSafeAreaHeight: CGFloat
+        let bottomSafeAreaHeightiPhoneX = self.isPortrait ? 44 : 29
         
-        if self.isPortrait {
-            bottomSafeAreaHeight = isiPhoneX ? 44 : 8
-        }
-        else {
-            bottomSafeAreaHeight = isiPhoneX ? 29 : 8
-        }
-        
-        return bottomSafeAreaHeight
+        return isiPhoneX ? CGFloat(bottomSafeAreaHeightiPhoneX) : 8
     }
-    
-    
 }
