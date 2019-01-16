@@ -24,10 +24,12 @@ class SnackViewTests: QuickSpec {
         }
 
         describe("initialization") {
-            it("has two items") {
-                expect(snackView?.getItems()).to(haveCount(2))
+            context("when two SVItems") {
+                it("has two items") {
+                    expect(snackView?.getItemsCount()).to(equal(2))
+                }
             }
-
+            
             it("did not invoke Show ") {
                 expect(snackViewSpy?.invokedShow).to(beFalsy())
             }
