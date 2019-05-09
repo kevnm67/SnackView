@@ -1,9 +1,22 @@
-language: swift
 os: osx
-osx_image: xcode10.1
+osx_image: xcode10.2
+language: swift
+
+addons:
+  homebrew:
+    packages:
+    - swiftlint
+    update: true
+
+cache:
+  bundler: true
+  directories:
+    - Carthage
+
 before_install:
-- rvm install 2.5.1
-- bundle install --without=documentation
+  - gem update --system
+  - gem install bundler
+
 env:
   global:
   - APPNAME="SnackView"
@@ -12,36 +25,63 @@ env:
   - TRAVIS_FASTLANE_BASE_DIR=$TRAVIS_BUILD_DIR/$FASTLANE_FOLDER
   - CC_TEST_REPORTER_ID="a0bf5f2078d07859622d69b49f7b3da12c86989d8d1bf4bf8564bff2c8df047b"
   - LC_CTYPE=en_US.UTF-8 LANG=en_US.UTF-8
+
 jobs:
   include:
-  - stage: test
-    name: Fastlane scan
-    before_script:
-    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64
-      > ./cc-test-reporter
-    - chmod +x ./cc-test-reporter
-    - "./cc-test-reporter before-build"
-    script:
-    - bundle exec fastlane test_with_coverage
-    after_success:
-    - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
-  - stage: release
-    name: Tag Version
-    if: "(branch = master)"
-    script:
-    - bundle exec create_release
+    - &test
+      stage: test
+      name: Swift 5 tests
+      osx_image: xcode10.2
+      env: DESTINATION="OS=11.4,name=iPhone X" SDK="$IOS_SDK"
+      before_script:
+        - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-darwin-amd64 > ./cc-test-reporter
+        - chmod +x ./cc-test-reporter
+        - bundle exec fastlane carthage_ci
+        - "./cc-test-reporter before-build"
+      script:
+        - bundle exec fastlane test_with_coverage
+        - bundle exec danger
+      after_success:
+        - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+
+    - <<: *test
+      name: Xcode 10.1 tests
+      osx_image: xcode10.1
+
+    - stage: lint
+      name: pod lint
+      script: bundle exec pod lib lint
+
+    - &carthage
+      stage: carthage
+      osx_image: xcode10.2
+      name: Carthage build Xcode 10.2
+      os: osx
+      script: carthage build --no-skip-current --configuration Release
+
+    - <<: *carthage
+      name: Carthage build Xcode 10.1
+      osx_image: xcode10.1
+
+
+    - stage: release
+      name: Release and tag new version
+      if: "(branch = master)"
+      script:
+        - bundle exec create_release
+
 stages:
-- test
-- name: release
-  if: (branch = master) AND (type != pull_request) AND (tag =~ /v\d\.\d{1,3}\.\d{1,3}$/)
+  - test
+  - build examples
+  - lint
+  - carthage
+  - name: release
+    if: (branch = master) AND (type != pull_request) AND (tag =~ /v\d\.\d{1,3}\.\d{1,3}$/)
+
 branches:
   only:
-  - master
-  - develop
-  - "/^(hotfix)$*/"
+    - master
+    - develop
+    - "/^(hotfix)$*/"
   except:
-  - "/^[^\\/]+\\/\\d+(?:\\.\\d+)+\\/\\d+$/"
-cache:
-  bundler: true
-  directories:
-  - Carthage
+    - "/^[^\\/]+\\/\\d+(?:\\.\\d+)+\\/\\d+$/"

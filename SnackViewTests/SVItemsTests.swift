@@ -80,7 +80,7 @@ class SVItemsTests: QuickSpec {
                     let littleImage = ImageCreator.getImageWith(size: CGSize(width: 320, height: 25))
 
                     let imageViewItem = SVImageViewItem(withImage: littleImage,
-                                                        andContentMode: UIViewContentMode.scaleAspectFill)
+                                                        andContentMode: UIView.ContentMode.scaleAspectFill)
                     snackView?.insert(item: imageViewItem, atIndex: 0)
 
                     expect(imageViewItem.frame.height).to(beLessThan(50))
@@ -92,7 +92,7 @@ class SVItemsTests: QuickSpec {
                     let largeImage = ImageCreator.getImageWith(size: CGSize(width: 320, height: 125))
 
                     let imageViewItem = SVImageViewItem(withImage: largeImage,
-                                                        andContentMode: UIViewContentMode.scaleAspectFill)
+                                                        andContentMode: UIView.ContentMode.scaleAspectFill)
                     snackView?.insert(item: imageViewItem, atIndex: 0)
 
                     expect(imageViewItem.frame.height).to(equal(125))

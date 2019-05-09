@@ -75,10 +75,10 @@ public class SVTextFieldItem: SVItem {
         self.addSubview(textField)
 
         //Add constraints to textField
-        let textFieldHContraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[titleLabel]-[textfield]-|", options: [], metrics: nil, views: ["titleLabel": titleLabel, "textfield": textField])
+        let textFieldHContraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[titleLabel]-[textfield]-|", options: [], metrics: nil, views: ["titleLabel": titleLabel, "textfield": textField as Any])
         self.addConstraints(textFieldHContraints)
 
-        let textFieldVContraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[textfield]-|", options: [], metrics: nil, views: ["textfield": textField])
+        let textFieldVContraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|-[textfield]-|", options: [], metrics: nil, views: ["textfield": textField as Any])
         self.addConstraints(textFieldVContraints)
     }
 

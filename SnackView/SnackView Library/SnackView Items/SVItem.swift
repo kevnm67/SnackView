@@ -66,8 +66,8 @@ open class SVItem: UIView {
             self.addSubview(bottomLine)
 
             //Add constraints to bottomLine
-            let bottomLineHConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[bottomLine]|", options: [], metrics: nil, views: ["bottomLine": bottomLine])
-            let bottomLineVConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomLine(0.5)]|", options: [], metrics: nil, views: ["bottomLine": bottomLine])
+            let bottomLineHConstraints = NSLayoutConstraint.constraints(withVisualFormat: "H:|[bottomLine]|", options: [], metrics: nil, views: ["bottomLine": bottomLine as Any])
+            let bottomLineVConstraints = NSLayoutConstraint.constraints(withVisualFormat: "V:[bottomLine(0.5)]|", options: [], metrics: nil, views: ["bottomLine": bottomLine as Any])
             self.addConstraints(bottomLineHConstraints + bottomLineVConstraints)
 
             //Add minimum view height

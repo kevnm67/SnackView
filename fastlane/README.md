@@ -22,9 +22,9 @@ fastlane ios run_bootstrap
 ```
 
 
-Ensure carthage is ready to go.
+Runs carthage bootstrap
 
-:configuration Optionally set the configuration.  Default is release.
+
 ### ios test_with_coverage
 ```
 fastlane ios test_with_coverage

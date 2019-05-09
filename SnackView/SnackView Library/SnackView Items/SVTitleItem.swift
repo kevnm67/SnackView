@@ -40,15 +40,15 @@ class SVTitleItem: SVItem {
         //Add cancel Button
         cancelButton = UIButton()
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        cancelButton.setTitle(self.cancelButtonTitle, for: UIControlState())
-        cancelButton.setTitleColor(#colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1), for: UIControlState.normal)
-        cancelButton.setTitleColor(#colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1).withAlphaComponent(0.5), for: UIControlState.highlighted)
+        cancelButton.setTitle(self.cancelButtonTitle, for: UIControl.State())
+        cancelButton.setTitleColor(#colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1), for: UIControl.State.normal)
+        cancelButton.setTitleColor(#colorLiteral(red: 0, green: 0.4784313725, blue: 1, alpha: 1).withAlphaComponent(0.5), for: UIControl.State.highlighted)
         self.addSubview(cancelButton)
 
-        let cancelButtonHContraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[cancelButton]-|", options: [], metrics: nil, views: ["cancelButton": cancelButton])
+        let cancelButtonHContraints = NSLayoutConstraint.constraints(withVisualFormat: "H:[cancelButton]-|", options: [], metrics: nil, views: ["cancelButton": cancelButton as Any])
         self.addConstraints(cancelButtonHContraints)
 
-        let cancelButtonVContraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[cancelButton]|", options: [], metrics: nil, views: ["cancelButton": cancelButton])
+        let cancelButtonVContraints = NSLayoutConstraint.constraints(withVisualFormat: "V:|[cancelButton]|", options: [], metrics: nil, views: ["cancelButton": cancelButton as Any])
         self.addConstraints(cancelButtonVContraints)
 
     }
